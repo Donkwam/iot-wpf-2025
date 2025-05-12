@@ -250,6 +250,11 @@ IoT 개발자 WPF 학습리포지토리 2025
 7. Models > Genre(DivisionTbl) 모델 작업
 8. BookGenreViewModel DB처리 구현
 
+    
+
+    https://github.com/user-attachments/assets/8e2158a8-7b6c-4955-9f64-43afc6d7876b
+
+
 
 ## 4일차
 
