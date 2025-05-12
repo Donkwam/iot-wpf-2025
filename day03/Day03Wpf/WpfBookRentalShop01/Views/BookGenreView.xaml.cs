@@ -23,6 +23,7 @@ namespace WpfBookRentalShop01.Views
         public BookGenreView()
         {
             InitializeComponent();
+
         }
     }
 }
