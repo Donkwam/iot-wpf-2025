@@ -14,13 +14,11 @@ namespace WpfBasicApp01
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             var viewModel = new MainViewModel();
-
-            var view = new MainView { 
+            var view = new MainView
+            {
                 DataContext = viewModel,
             };
             view.ShowDialog();
-
         }
     }
-
 }

@@ -14,67 +14,55 @@ namespace WpfBookRentalShop01.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         private string _greeting;
-
-        public string Greeting
-        {
-            get => _greeting;
-            set => SetProperty(ref _greeting, value);
-        }
-
-        private string _currentView;
-
-        public string CurrentStatus
-        {
-            get => _currentView;
-            set => SetProperty(ref _currentView, value);
-        }
-
-        private UserControl currentView;
-
-        public UserControl CurrentView
-        {
-            get => currentView;
-            set => SetProperty(ref currentView, value);
+        public string Greeting { 
+            get => _greeting;             
+            set => SetProperty(ref _greeting, value); 
         }
 
         public MainViewModel()
         {
-            Greeting = "BookRentalShop!!";
+            Greeting = "hehehe!!";
         }
 
-        #region '화면 기능(이벤트)처리'  
+        private UserControl _currentview;
+        private string _currentStatus;
+        public UserControl Currentview { 
+            get => _currentview; 
+            set => SetProperty(ref _currentview, value); 
+        }
+        public string CurrentStatus { 
+            get => _currentStatus; 
+            set => SetProperty(ref _currentStatus, value); 
+        }
+
+
+        #region 화면 기능(이벤트처리)
 
         [RelayCommand]
         public void AppExit()
         {
-            MessageBox.Show("종료합니다!");
+            MessageBox.Show("ㅇㅇ", "ㄴㄴ");
         }
 
         [RelayCommand]
         public void ShowBookGenre()
         {
-            var vm = new BookGenreViewModel();
-            var v = new BookGenreView
-            {
-                DataContext = vm,
-            };
-            CurrentView = v;
-            CurrentStatus = "책장르관리 화면입니다.";
+            var viewModel = new BookGenreViewModel();
+            var view = new BookGenreView();
+            view.DataContext = viewModel;
+            CurrentStatus = "책장르 관리 화면 입니다.";
+            Currentview = view;
         }
 
         [RelayCommand]
         public void ShowBooks()
         {
-            var vm = new BooksViewModel();
-            var v = new BooksView
-            {
-                DataContext = vm,
-            };
-            CurrentView = v;
-            CurrentStatus = "책관리 화면입니다.";
-
+            var viewModel = new BooksViewModel();
+            var view = new BooksView();
+            view.DataContext = viewModel;
+            CurrentStatus = "책 관리 화면 입니다.";
+            Currentview = view;
         }
-
         #endregion
     }
 }

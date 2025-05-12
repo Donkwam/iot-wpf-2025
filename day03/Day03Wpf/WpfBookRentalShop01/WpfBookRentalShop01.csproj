@@ -21,4 +21,10 @@
     <PackageReference Include="NLog" Version="5.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\BooksView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
