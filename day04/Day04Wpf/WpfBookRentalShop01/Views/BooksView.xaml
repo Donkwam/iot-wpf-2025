@@ -10,6 +10,7 @@
     mc:Ignorable="d" 
     d:DesignHeight="458" d:DesignWidth="998"
     Dialog:DialogParticipation.Register="{Binding}">
+
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -21,22 +22,20 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" FontSize="25"
-               Margin="10,0,0,0"
-               Text="책 관리"  />
+                   Margin="10,0,0,0"
+                   Text="도서 관리"  />
 
         <DataGrid Grid.Row="1" Grid.Column="0" Margin="5"
-              AutoGenerateColumns="False" IsReadOnly="True"
-              ItemsSource="{Binding Genres}"
-              SelectedItem="{Binding SelectedGenre, Mode=TwoWay}">
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  ItemsSource="{Binding Books}"
+                  SelectedItem="{Binding SelectedBook, Mode=TwoWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Idx}" Header="순번" />
-                <DataGridTextColumn Binding="{Binding Division}" Header="장르" Visibility="Hidden" />
-                <DataGridTextColumn Binding="{Binding DNames}" Header="장르명" />
-                <DataGridTextColumn Binding="{Binding Names}" Header="책제목" />
-                <DataGridTextColumn Binding="{Binding Author}" Header="책저자" />
-                <DataGridTextColumn Binding="{Binding ReleaseDate, StringFormat='yyyy-MM-dd'}" Header="출판일" />
-                <DataGridTextColumn Binding="{Binding ISBN}" Header="ISBN" Visibility="Hidden" />
-                <DataGridTextColumn Binding="{Binding Price, StringFormat={}{0:N0}원}" Header="책가격" />
+                <DataGridTextColumn Header="이름" Binding="{Binding Names}" />
+                <DataGridTextColumn Header="저자" Binding="{Binding Author}" />
+                <DataGridTextColumn Header="분류" Binding="{Binding Division}" />
+                <DataGridTextColumn Header="출간일" Binding="{Binding ReleaseDate}" />
+                <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}" />
+                <DataGridTextColumn Header="가격" Binding="{Binding Price}" />
             </DataGrid.Columns>
         </DataGrid>
 
@@ -53,52 +52,49 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <!-- 그룹박스내 UI 컨트롤 -->
+                <!-- 상세 입력 필드 -->
                 <mah:NumericUpDown 
                     Grid.Row="0" Margin="3"
-                    Minimum="0" IsReadOnly="True" 
-                    mah:TextBoxHelper.AutoWatermark="True"
+                    Minimum="0" IsReadOnly="True"
                     mah:TextBoxHelper.Watermark="순번"
-                    mah:TextBoxHelper.WatermarkAlignment="Left" />
+                    Value="{Binding SelectedBook.Idx}" />
 
-                <ComboBox 
-                    Grid.Row="1" Margin="3"
-                    SelectedValuePath="Key"
-                    DisplayMemberPath="Value"      
-                    mah:TextBoxHelper.Watermark="장르" />
+                <TextBox Grid.Row="1" Margin="3"
+                         mah:TextBoxHelper.Watermark="책 이름"
+                         Text="{Binding SelectedBook.Names, Mode=TwoWay}" />
 
                 <TextBox Grid.Row="2" Margin="3"
-                     mah:TextBoxHelper.AutoWatermark="True"
-                     mah:TextBoxHelper.Watermark="책제목" />
+                         mah:TextBoxHelper.Watermark="저자"
+                         Text="{Binding SelectedBook.Author, Mode=TwoWay}" />
 
                 <TextBox Grid.Row="3" Margin="3"
-                     mah:TextBoxHelper.AutoWatermark="True"
-                     mah:TextBoxHelper.Watermark="책저자" />
+                         mah:TextBoxHelper.Watermark="분류"
+                         Text="{Binding SelectedBook.Division, Mode=TwoWay}" />
 
                 <TextBox Grid.Row="4" Margin="3"
-                    mah:TextBoxHelper.AutoWatermark="True"
-                    mah:TextBoxHelper.Watermark="ISBN" />
+                         mah:TextBoxHelper.Watermark="출간일"
+                         Text="{Binding SelectedBook.ReleaseDate, Mode=TwoWay}" />
 
-                <DatePicker
-                    Grid.Row="5" Margin="3"
-                    mah:TextBoxHelper.AutoWatermark="True"
-                    mah:TextBoxHelper.Watermark="출판일" />
+                <TextBox Grid.Row="5" Margin="3"
+                         mah:TextBoxHelper.Watermark="ISBN"
+                         Text="{Binding SelectedBook.ISBN, Mode=TwoWay}" />
 
                 <TextBox Grid.Row="6" Margin="3"
-                    mah:TextBoxHelper.AutoWatermark="True"
-                    mah:TextBoxHelper.Watermark="책가격" />
+                         mah:TextBoxHelper.Watermark="가격"
+                         Text="{Binding SelectedBook.Price, Mode=TwoWay}" />
 
-                <StackPanel Orientation="Horizontal" Grid.Row="7" HorizontalAlignment="Right">
+                <!-- 버튼들 -->
+                <StackPanel Orientation="Horizontal" Grid.Row="7" HorizontalAlignment="Right" Margin="3">
                     <Button Content="초기화" Margin="5,5,5,5" Width="70" 
-                        Style="{StaticResource MahApps.Styles.Button.MetroSquare}"
-                        Command="{Binding SetInitCommand}" />
+                            Style="{StaticResource MahApps.Styles.Button.MetroSquare}"
+                            Command="{Binding SetInitCommand}" />
                     <Button Content="저장" Margin="0,5,5,5" Width="70" 
-                        Style="{StaticResource MahApps.Styles.Button.MetroSquare.Accent}" 
-                        Command="{Binding SaveDataCommand}" />
+                            Style="{StaticResource MahApps.Styles.Button.MetroSquare.Accent}" 
+                            Command="{Binding SaveDataCommand}" />
                     <Button Content="삭제" Margin="0,5,5,5" Width="70" 
-                        Style="{StaticResource MahApps.Styles.Button.MetroSquare.Accent}"
-                        Background="Black"
-                        Command="{Binding DelDataCommand}" />
+                            Style="{StaticResource MahApps.Styles.Button.MetroSquare.Accent}"
+                            Background="Black"
+                            Command="{Binding DeleteDataCommand}" />
                 </StackPanel>
             </Grid>
         </GroupBox>
