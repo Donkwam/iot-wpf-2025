@@ -4,7 +4,6 @@ using MahApps.Metro.Controls.Dialogs;
 using MySql.Data.MySqlClient;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.IO.Packaging;
 using System.Windows;
 using WpfBookRentalShop01.Helpers;
 using WpfBookRentalShop01.Models;
@@ -13,20 +12,18 @@ namespace WpfBookRentalShop01.ViewModels
 {
     public partial class BookGenreViewModel : ObservableObject
     {
-        private readonly IDialogCoordinator dialogCoordinator; // MainviewModel 과 동일
+        private readonly IDialogCoordinator dialogCoordinator; // MainViewModel과 동일.
+
         private ObservableCollection<Genre> _genres;
-        public ObservableCollection<Genre> Genres
-        {
-            get => _genres;
-            set => SetProperty(ref _genres, value);
+        public ObservableCollection<Genre> Genres { 
+            get => _genres; 
+            set => SetProperty(ref _genres, value); 
         }
 
         private Genre _selectedGenre;
-        public Genre SelectedGenre
-        {
-            get => _selectedGenre;
-            set
-            {
+        public Genre SelectedGenre { 
+            get => _selectedGenre; 
+            set { 
                 SetProperty(ref _selectedGenre, value);
                 _isUpdate = true;  // 수정할 상태
             }
@@ -56,7 +53,6 @@ namespace WpfBookRentalShop01.ViewModels
             try
             {
                 string query = "SELECT division, names FROM divtbl";
-
                 ObservableCollection<Genre> genres = new ObservableCollection<Genre>();
 
                 using (MySqlConnection conn = new MySqlConnection(Common.CONNSTR))
@@ -86,8 +82,8 @@ namespace WpfBookRentalShop01.ViewModels
                 //MessageBox.Show(ex.Message);
                 await this.dialogCoordinator.ShowMessageAsync(this, "오류", ex.Message);
             }
-            Common.LOGGER.Info("책장르 데이터 로드");
 
+            Common.LOGGER.Info("책장르 데이터 로드");
         }
 
         // SetInitCommand, SaveDataCommand, DelDataCommand
@@ -100,49 +96,47 @@ namespace WpfBookRentalShop01.ViewModels
         [RelayCommand]
         public async void SaveData()
         {
-            // 신규추가 / 기존데이터수정
-            //Debug.WriteLine(SelectedGenre.Names);
+            // 신규추가/기존데이터수정
             //Debug.WriteLine(SelectedGenre.Division);
+            //Debug.WriteLine(SelectedGenre.Names);
             //Debug.WriteLine(_isUpdate);
-
             try
             {
-                //string connectionString = "Server=localhost;Database=bookrentalshop;Uid=root;Pwd=12345;Charset=utf8;";
+                // string connectionString = "Server=localhost;Database=bookrentalshop;Uid=root;Pwd=12345;Charset=utf8;";
                 string query = string.Empty;
 
                 using (MySqlConnection conn = new MySqlConnection(Common.CONNSTR))
                 {
                     conn.Open();
-                    if (_isUpdate) query = "UPDATE divtbl SET names = @names WHERE division = @division"; // 기존 데이터 수정
-                    else query = "INSERT INTO divtbl VALUES (@division, @names)"; // 신규 등록
+
+                    if (_isUpdate) query = "UPDATE divtbl SET names = @names WHERE division = @division";      // 기존 데이터 수정
+                    else query = "INSERT INTO divtbl VALUES (@division, @names)";                    // 신규 등록
+
                     MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@division", SelectedGenre.Division);
                     cmd.Parameters.AddWithValue("@names", SelectedGenre.Names);
 
                     var resultCnt = cmd.ExecuteNonQuery();
-
-                    if (resultCnt > 0) // 조건식 추가
+                    if (resultCnt > 0)
                     {
                         Common.LOGGER.Info("책장르 데이터 저장완료");
-                        //MessageBox.Show("저장성공!~");
-                        await this.dialogCoordinator.ShowMessageAsync(this, "저장", "저장성공");
-
+                        //MessageBox.Show("저장성공~");
+                        await this.dialogCoordinator.ShowMessageAsync(this, "저장", "저장성공!");
                     }
                     else
                     {
-                        Common.LOGGER.Info("책장르 데이터 저장실패");
-                        //MessageBox.Show("저장실패!!");
-                        await this.dialogCoordinator.ShowMessageAsync(this, "저장", "저장 실패");
-
+                        Common.LOGGER.Warn("책장르 데이터 저장실패!");
+                        await this.dialogCoordinator.ShowMessageAsync(this, "저장", "저장실패~!");
                     }
                 }
             }
             catch (Exception ex)
             {
                 Common.LOGGER.Error(ex.Message);
-                MessageBox.Show(ex.Message);
-            }
-            LoadGridFromDb();
+                await this.dialogCoordinator.ShowMessageAsync(this, "오류", ex.Message);
+            }            
+
+            LoadGridFromDb(); // 저장이 끝난 후 다시 DB내용을 그리드에 그리기
         }
 
         [RelayCommand]
@@ -151,7 +145,6 @@ namespace WpfBookRentalShop01.ViewModels
             if (_isUpdate == false)
             {
                 await this.dialogCoordinator.ShowMessageAsync(this, "삭제", "데이터를 선택하세요.");
-                //MessageBox.Show("선택된 데이터가 아니면 삭제할 수 없습니다.");
                 return;
             }
 
@@ -163,7 +156,6 @@ namespace WpfBookRentalShop01.ViewModels
 
             try
             {
-                //string connectionString = "Server=localhost;Database=bookrentalshop;Uid=root;Pwd=12345;Charset=utf8;";
                 string query = "DELETE FROM divtbl WHERE division = @division";
 
                 using (MySqlConnection conn = new MySqlConnection(Common.CONNSTR))
@@ -177,27 +169,24 @@ namespace WpfBookRentalShop01.ViewModels
 
                     if (resultCnt > 0)
                     {
-                        Common.LOGGER.Info($"책장르 데이터 {SelectedGenre.Division} 삭제성공");
-                        //MessageBox.Show("삭제성공!~");
-                        await this.dialogCoordinator.ShowMessageAsync(this, "삭제", "삭제 성공");
-
+                        Common.LOGGER.Info($"책장르 데이터 {SelectedGenre.Division} 삭제완료");
+                        await this.dialogCoordinator.ShowMessageAsync(this, "삭제", "삭제성공.");
                     }
                     else
                     {
-                        Common.LOGGER.Info("책장르 데이터 삭제실패");
-                        //MessageBox.Show("삭제실패!!");
-                        await this.dialogCoordinator.ShowMessageAsync(this, "삭제", "삭제 실패");
-
+                        Common.LOGGER.Warn("책장르 데이터 삭제실패!");
+                        await this.dialogCoordinator.ShowMessageAsync(this, "삭제", "삭제실패!!");
                     }
                 }
+
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
+                Common.LOGGER.Error(ex.Message);
                 await this.dialogCoordinator.ShowMessageAsync(this, "오류", ex.Message);
-
             }
-            LoadGridFromDb();
+
+            LoadGridFromDb(); // 저장이 끝난 후 다시 DB내용을 그리드에 그리기
         }
     }
 }
