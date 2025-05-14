@@ -25,7 +25,7 @@ namespace MovieFinder2025.ViewModels
         public MoviesViewModel(IDialogCoordinator coordinator) {
             this.dialogsCoordinator = coordinator;
 
-            Common.LOGGER.Info("MoviewFinder2025 Start.");
+            Common.LOGGER.Info("MovieFinder2025 Start.");
 
             PosterUri = new Uri("/No_Picture.png", UriKind.RelativeOrAbsolute);
         }
@@ -129,7 +129,7 @@ namespace MovieFinder2025.ViewModels
                 StringBuilder sb = new StringBuilder();
                 //Environment.NewLine == "\r\n"
                 //sb.Append(currMovie.Original_title+ "(" + currMovie.Release_date.ToString("yyyy-MM-dd") + ")" + Environment.NewLine);
-                sb.Append($"{currMovie.Original_title} ({currMovie.Release_date.ToString("yyyy-MM-dd")}\n");
+                sb.Append($"{currMovie.Original_title} ({currMovie.Release_date.ToString("yyyy-MM-dd")})\n");
                 sb.Append($"평점 : {currMovie.Vote_average.ToString("F2")}\n\n"); 
                 sb.Append(currMovie.Overview);
 
