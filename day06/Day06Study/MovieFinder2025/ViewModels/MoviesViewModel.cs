@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using MahApps.Metro.Controls.Dialogs;
 using MovieFinder2025.Helpers;
 using MovieFinder2025.Models;
+using MovieFinder2025.Views;
 using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI;
 using Org.BouncyCastle.Tls;
@@ -19,6 +20,7 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace MovieFinder2025.ViewModels
@@ -172,6 +174,7 @@ namespace MovieFinder2025.ViewModels
                 sb.Append($"평점 : {currMovie.Vote_average.ToString("F2")}\n\n"); 
                 sb.Append(currMovie.Overview);
 
+                Common.LOGGER.Info($"{currMovie.Title} 상세정보 확인");
                 await this.dialogsCoordinator.ShowMessageAsync(this, currMovie.Title, sb.ToString());
             }
         }
@@ -217,6 +220,7 @@ namespace MovieFinder2025.ViewModels
 
                     if (resultCnt > 0)
                     {
+                        Common.LOGGER.Info($"{SelectedMovieItem.Title} 즐겨찾기 추가");
                         await this.dialogsCoordinator.ShowMessageAsync(this, "즐겨찾기추가", "즐겨찾기 추가 성공");
                     }
                     else
@@ -314,6 +318,7 @@ namespace MovieFinder2025.ViewModels
             {
                 if (ex.Message.ToUpper().Contains("DUPLCATE ENTRY"))
                 {
+                    Common.LOGGER.Info($"{SelectedMovieItem.Title} 기추가된 영화");
                     await this.dialogsCoordinator.ShowMessageAsync(this, "즐겨찾기추가", "이미 추가된 즐겨찾기입니다.");
                 }
                 else
@@ -334,8 +339,24 @@ namespace MovieFinder2025.ViewModels
         [RelayCommand]
         public async Task ViewMovieTrailer()
         {
-            await this.dialogsCoordinator.ShowMessageAsync(this, "예고편 보기", "즐겨찾기 확인임!");
-        }
+            if (SelectedMovieItem == null)
+            {
+                await this.dialogsCoordinator.ShowMessageAsync(this, "예고편보기", "영화를 선택하세요.");
+                return;
+            }
 
+            var movieTitle = SelectedMovieItem.Title;
+
+            var viewModel = new TrailerViewModel(Common.DIALOGCOORDINATOR, movieTitle);
+            viewModel.MovieTitle = movieTitle;
+            var view = new TrailerView
+            {
+                DataContext = viewModel,
+            };
+            view.Owner = Application.Current.MainWindow;    // 부모창의 중앙에 위치
+
+            Common.LOGGER.Info($"{SelectedMovieItem.Title} 유튜브 트레일러 실행");
+            view.ShowDialog();
+        }
     }
 }
