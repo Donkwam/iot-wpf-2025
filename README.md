@@ -365,3 +365,8 @@ IoT 개발자 WPF 학습리포지토리 2025
     5. NuGet 패키지 Google.Apis.YouTube.v3 설치
 6. 기타 작업 완료
 7. 결과 화면
+
+
+    https://github.com/user-attachments/assets/a50a8119-cee8-4791-aba3-13b0c9d69029
+
+
