@@ -40,7 +40,7 @@ namespace BusanRestaurantApp.ViewModels
         private async Task GetDataFromOpenApi()
         {
             string baseUri = "http://apis.data.go.kr/6260000/FoodService/getFoodKr";
-            string myServiceKey = "JzmUY2JqiPqaZHmZ7VDke8wMFu3m%2FCXZSUCawmglK99g1cw5ytYYWZ%2F4VmiJz2Wn5MB1aBEA7N0YlXlJz%2B%2FK8A%3D%3D";
+            string myServiceKey = "RPX%2FE7aQrBxFPgQ7C1h4iKRIQcguZPxrKgBbfOj4VNwWKJjtAl%2BYQo%2B3arlfi7Uo34BV8GrTxKO%2BuHXB7JhddQ%3D%3D";
 
             StringBuilder strUri = new StringBuilder();
             strUri.Append($"serviceKey={myServiceKey}&");
