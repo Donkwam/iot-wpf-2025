@@ -370,3 +370,12 @@ IoT 개발자 WPF 학습리포지토리 2025
     https://github.com/user-attachments/assets/a50a8119-cee8-4791-aba3-13b0c9d69029
 
 
+## 7일차
+### 부산광역시 부산맛집 정보앱
+1. [데이터포털](https://data.go.kr) OpenAPI
+2. WPF 프로젝트 생성
+3. NuGet 패키지 라이브러리 설치
+    - CommunityToolkit.Mvvm
+    - MahApps.Metro / MahApps.Metro.IconPacks
+    - CefSharp.wpf.NETCore (플랫폼 X64)
+4. MVVM 초기화
