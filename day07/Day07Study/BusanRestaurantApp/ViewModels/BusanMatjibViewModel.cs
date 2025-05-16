@@ -26,7 +26,8 @@ namespace BusanRestaurantApp.ViewModels
             GetDataFromOpenApi();
         }
 
-        public ObservableCollection<BusanItem> BusanItems { 
+        public ObservableCollection<BusanItem> BusanItems
+        {
             get => _busanItems;
             set => SetProperty(ref _busanItems, value);
         }
@@ -39,8 +40,8 @@ namespace BusanRestaurantApp.ViewModels
         private async Task GetDataFromOpenApi()
         {
             string baseUri = "http://apis.data.go.kr/6260000/FoodService/getFoodKr";
-            string myServiceKey = "RPX%2FE7aQrBxFPgQ7C1h4iKRIQcguZPxrKgBbfOj4VNwWKJjtAl%2BYQo%2B3arlfi7Uo34BV8GrTxKO%2BuHXB7JhddQ%3D%3D";
-            
+            string myServiceKey = "JzmUY2JqiPqaZHmZ7VDke8wMFu3m%2FCXZSUCawmglK99g1cw5ytYYWZ%2F4VmiJz2Wn5MB1aBEA7N0YlXlJz%2B%2FK8A%3D%3D";
+
             StringBuilder strUri = new StringBuilder();
             strUri.Append($"serviceKey={myServiceKey}&");
             strUri.Append($"pageNo={PageNo}&");
@@ -66,12 +67,13 @@ namespace BusanRestaurantApp.ViewModels
                 if (status == "00")
                 {
                     var item = jsonResult["getFoodKr"]["item"];
-                    var jsonArray = item as JArray; 
+                    var jsonArray = item as JArray;
 
                     foreach (var subitem in jsonArray)
                     {
                         //Common.LOGGER.Info(subitem.ToString());
-                        busanItems.Add(new BusanItem {
+                        busanItems.Add(new BusanItem
+                        {
                             Uc_Seq = Convert.ToInt32(subitem["UC_SEQ"]),
                             Main_Title = Convert.ToString(subitem["MAIN_TITLE"]),
                             Gugun_Nm = Convert.ToString(subitem["GUGUN_NM"]),
