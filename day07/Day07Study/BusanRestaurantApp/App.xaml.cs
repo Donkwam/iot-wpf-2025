@@ -1,8 +1,6 @@
 ﻿using BusanRestaurantApp.ViewModels;
 using BusanRestaurantApp.Views;
 using MahApps.Metro.Controls.Dialogs;
-using System.Configuration;
-using System.Data;
 using System.Windows;
 
 namespace BusanRestaurantApp
@@ -16,7 +14,11 @@ namespace BusanRestaurantApp
         {
             IDialogCoordinator coordinator = DialogCoordinator.Instance;
             var viewModel = new BusanMatjibViewModel(coordinator);
-            var view = new BusanMatjibView();
+            var view = new BusanMatjibView
+            {
+                DataContext = viewModel,
+            };
+            view.ShowDialog();
         }
     }
 
