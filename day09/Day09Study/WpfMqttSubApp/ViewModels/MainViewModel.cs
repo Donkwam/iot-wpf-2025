@@ -18,7 +18,7 @@ namespace WpfMqttSubApp.ViewModels
         private IMqttClient mqttClient;
         private readonly IDialogCoordinator dialogCoordinator;
         private readonly DispatcherTimer timer;
-        private int counter = 1; // TODO : 나중에 삭제필요
+        private int lineCounter = 1; // TODO : 나중에 텍스트가 너무 많아져서 느려지면 초기화시 사용
 
         private string _brokerHost;
         private string _databaseHost;
@@ -34,15 +34,16 @@ namespace WpfMqttSubApp.ViewModels
             BrokerHost = "210.119.12.83";
             DatabaseHost = "210.119.12.83";
 
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += (sender, e) =>
-            {
-                // RichTextBox 추가 내용
-                LogText += $"Log [{DateTime.Now:HH:mm:ss}] - {counter++}\n";
-                Debug.WriteLine($"Log [{DateTime.Now:HH:mm:ss}] - {counter++}");
-            };
-            timer.Start();
+            // RichTextBox 테스트용.
+            //timer = new DispatcherTimer();
+            //timer.Interval = TimeSpan.FromSeconds(1);
+            //timer.Tick += (sender, e) =>
+            //{
+            //    // RichTextBox 추가 내용
+            //    LogText += $"Log [{DateTime.Now:HH:mm:ss}] - {counter++}\n";
+            //    Debug.WriteLine($"Log [{DateTime.Now:HH:mm:ss}] - {counter++}");
+            //};
+            //timer.Start();
         }
 
         public string LogText
@@ -82,8 +83,22 @@ namespace WpfMqttSubApp.ViewModels
             //MQTT 접속 후 이벤트처리
             mqttClient.ConnectedAsync += async e =>
             {
-
+                LogText += "MQTT 브로커 접속성공\n";
+                // 연결 이후 구독(Subscribe)
+                await mqttClient.SubscribeAsync("smarthome/83/topic");
             };
+
+            mqttClient.ApplicationMessageReceivedAsync += e =>
+            {
+                var topic = e.ApplicationMessage.Topic;
+                var payload = e.ApplicationMessage.ConvertPayloadToString(); // byte 데이터를 UTF-8 문자열로 변환
+                LogText += $"LINENUMBER : {lineCounter++}\n";
+                LogText += $"{payload}\n";
+
+                return Task.CompletedTask;
+            };
+
+            await mqttClient.ConnectAsync(mqttClientOptions); // MQTT 서버에 접속
         }
 
         [RelayCommand]
