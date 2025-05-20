@@ -498,3 +498,11 @@ https://github.com/user-attachments/assets/228d2b8d-180e-4f64-811a-05d022f203f2
     ```
 5. WPF MVVM 전체구현
 6. MQTTPub.py와 Publish된 IoT데이터 WPF에서 Subscribe 예제
+
+## 10일차
+
+### 스마트홈 연동 모니터링앱 (계속)
+
+#### 스마트홈 기기 실제 IoT센서데이터 모니터링앱
+
+#### 스마트홈 WPF 실시간 시각화
