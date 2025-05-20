@@ -39,8 +39,8 @@ namespace WpfMqttSubApp.ViewModels
             timer.Tick += (sender, e) =>
             {
                 // RichTextBox 추가 내용
-                LogText += $"Log [{DateTime.Now:HH:mm:ss}] - {counter++}";
-                Debug.WriteLine($"Log [{DateTime.Now:HH:mm:ss}] - {counter++}");
+                LogText += $"Log [{DateTime.Now:HH:mm:ss}] - {counter++}\n";
+                //Debug.WriteLine($"Log [{DateTime.Now:HH:mm:ss}] - {counter++}");
             };
             timer.Start();
         }
