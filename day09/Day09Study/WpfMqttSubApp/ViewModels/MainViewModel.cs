@@ -23,7 +23,8 @@ namespace WpfMqttSubApp.ViewModels
         {
             this.dialogCoordinator = coordinator;
 
-            BrokerHost = "211.119.12.83";
+            BrokerHost = "210.119.12.83";
+            DatabaseHost = "210.119.12.83";
         }
         public MainViewModel()
         {
@@ -45,7 +46,13 @@ namespace WpfMqttSubApp.ViewModels
         [RelayCommand]
         public async Task ConnectBroker()
         {
-            await this.dialogCoordinator.ShowMessageAsync(this, "브로커연결", "브로커 연결합니다!");
+            if (string.IsNullOrEmpty(BrokerHost))
+            { 
+                await this.dialogCoordinator.ShowMessageAsync(this, "브로커연결", "브로커호스트를 입력하세요");
+                return;
+            }
+
+            // MQTT브로커에 접속해서 데이터를 가져오기
         }
 
         [RelayCommand]
