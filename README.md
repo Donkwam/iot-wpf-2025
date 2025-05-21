@@ -526,7 +526,12 @@ https://github.com/user-attachments/assets/c04fab45-83ab-4c14-ad29-9fbe2d2c1f46
     - MQTTnet
     - Newtonsoft.Json
     - NLog
-- WpfMqttSubApp.Models
+- WpfMqttSubApp.Models의 SensingInfo.cs 가져오기
+- MQTT 센서 데이터로 동작용 변수 값 할당
+- 실행화면
 
+    - 스마트홈 조작영상
+
+    -스마트홈 모니터링앱 동작영상
 
 ### Github 대문 꾸미기
