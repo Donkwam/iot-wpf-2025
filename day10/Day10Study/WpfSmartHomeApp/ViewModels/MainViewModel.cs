@@ -27,6 +27,8 @@ namespace WpfSmartHomeApp.ViewModels
 
         // readonly는 생성자에서만 값을 할당. 그외는 불가
         private readonly DispatcherTimer _timer;
+        // 로그용 타이머
+        private readonly DispatcherTimer _logTimer;
         // MQTT용 변수들
         private string TOPIC;
         private IMqttClient mqttClient;
