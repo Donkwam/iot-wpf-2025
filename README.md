@@ -532,6 +532,14 @@ https://github.com/user-attachments/assets/c04fab45-83ab-4c14-ad29-9fbe2d2c1f46
 
     - 스마트홈 조작영상
 
+
+https://github.com/user-attachments/assets/b40090c2-0573-4a70-9091-25be599422be
+
+
     -스마트홈 모니터링앱 동작영상
+
+
+https://github.com/user-attachments/assets/973992fb-40d1-4e11-9185-680623fcd4cb
+
 
 ### Github 대문 꾸미기
